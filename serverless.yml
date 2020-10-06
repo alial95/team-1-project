@@ -1,0 +1,17 @@
+service: group-1
+plugins:
+  - serverless-python-requirements
+
+provider:
+  name: aws
+  stage: dev
+  region: eu-west-2
+
+package:
+  individually: true
+
+functions:
+  group-1:
+    runtime: python3.8
+    handler: handler.start
+    module: group-1

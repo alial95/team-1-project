@@ -5,6 +5,7 @@ import pandas as pd
 import boto3
 import numpy as np
 from dotenv import load_dotenv
+from itertools import chain
 load_dotenv()
 
 def start(event, context):
@@ -41,7 +42,7 @@ def start(event, context):
         customer = Transaction(i-1, total[i], customers[i], dates[i], location[i])
         transactions_today.append(customer)
 
-    create comma-separated strings
+    # create comma-separated strings
     def chainer(s):
         return list(chain.from_iterable(s.str.split(',')))
     # determine lengths of splits
@@ -113,18 +114,20 @@ def start(event, context):
         cursor = conn.cursor()
         for person in transactions_today[1:20]:
             cursor.execute(f"INSERT INTO transactions (transaction_id, total, customer_name, date_time, location) VALUES ('{person.transaction_id}', '{person.total}', '{person.customer_name}', '{person.date}', '{person.location}')")
-            connection.commit()
+            conn.commit()
+        
+        cursor = conn.cursor()
+        for basket in basket_sep[1:20]:
+            cursor.execute(f"insert into basket (basket_id, basket_item, cost) values ('{basket.basket_id}', '{basket.basket_item}', {basket.cost}')")
+            conn.commit()
         cursor.close()
         conn.close()
-        # cursor = conn.cursor()
-        # for basket in basket_sep[1:20]:
-        #     cursor.execute(f"insert into basket (basket_id, basket_item, cost) values ('{basket.basket_id}', '{basket.basket_item}', {basket.cost}')")
-        #     connection.commit()
-        # cursor.close()
-        # conn.close()
     except Exception as ERROR:
         print("Execution Issue: " + str(ERROR))
-        sys.exit(1)
+    finally:
+        cursor.close()
+        conn.close()
+
 
     print('executed statement')
 
