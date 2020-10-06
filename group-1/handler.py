@@ -112,21 +112,21 @@ def start(event, context):
     
     try:
         cursor = conn.cursor()
-        for person in transactions_today[1:20]:
+        for person in transactions_today:
             cursor.execute(f"INSERT INTO transactions (transaction_id, total, customer_name, date_time, location) VALUES ('{person.transaction_id}', '{person.total}', '{person.customer_name}', '{person.date}', '{person.location}')")
             conn.commit()
-        
+        cursor.close()
+    
         cursor = conn.cursor()
-        for basket in basket_sep[1:20]:
+        for basket in basket_sep:
             cursor.execute(f"insert into basket (basket_id, basket_item, cost) values ('{basket.basket_id}', '{basket.basket_item}', {basket.cost}')")
             conn.commit()
         cursor.close()
         conn.close()
     except Exception as ERROR:
         print("Execution Issue: " + str(ERROR))
-    finally:
-        cursor.close()
-        conn.close()
+    
+       
 
 
     print('executed statement')
