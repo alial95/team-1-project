@@ -13,7 +13,7 @@ def start(event, context):
     # connect to bucket and get bucket key
     s3 = boto3.client('s3')
     response = s3.list_objects(Bucket='cafe-transactions')
-    first_step = response['Contents'][0]
+    first_step = response['Contents'][-1]
     key = first_step['Key']
 
     bucket = 'cafe-transactions'
@@ -41,6 +41,11 @@ def start(event, context):
     for i in range(1, len(df)):
         customer = Transaction(i-1, total[i], customers[i], dates[i], location[i])
         transactions_today.append(customer)
+    
+    transaction_ids = []
+    for i in transactions_today:
+        trans_id = i.transaction_id
+        transaction_ids.append(trans_id)
 
     # create comma-separated strings
     def chainer(s):
@@ -113,16 +118,25 @@ def start(event, context):
     try:
         cursor = conn.cursor()
         for person in transactions_today:
-            cursor.execute(f"INSERT INTO transactions (transaction_id, total, customer_name, date_time, location) VALUES ('{person.transaction_id}', '{person.total}', '{person.customer_name}', '{person.date}', '{person.location}')")
+            cursor.execute(f"INSERT INTO transactions_group1 (transaction_id, total, customer_name, date_time, location) VALUES ('{person.transaction_id}', '{person.total}', '{person.customer_name}', '{person.date}', '{person.location}')")
             conn.commit()
         cursor.close()
+        
     
+    except Exception as ERROR:
+        print("Execution Issue: " + str(ERROR))
+    
+    print('going to basket now')
+
+    try:
         cursor = conn.cursor()
         for basket in basket_sep:
-            cursor.execute(f"insert into basket (basket_id, basket_item, cost) values ('{basket.basket_id}', '{basket.basket_item}', {basket.cost}')")
+            cursor.execute(f"insert into basket_group1 (basket_id, basket_item, cost) values ('{basket.basket_id}', '{basket.basket_item}', '{basket.cost}')")
             conn.commit()
         cursor.close()
         conn.close()
+    
+
     except Exception as ERROR:
         print("Execution Issue: " + str(ERROR))
     
