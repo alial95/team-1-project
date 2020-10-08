@@ -1,4 +1,5 @@
 import psycopg2
+import psycopg2.extras
 import sys
 import os
 import pandas as pd
@@ -26,7 +27,7 @@ def start(event, context):
     total = df['pay_amount']
     customer = df['customer_name']
     customers = list(customer)
-    test_id = 1
+    
     class Transaction:
         def __init__(self, transaction_id, total, customer_name, date, location):
             self.transaction_id= transaction_id
@@ -66,7 +67,7 @@ def start(event, context):
         basket_item_test = basket_item.strip(' -')
         basket_price.append(price)
         basket_items.append(basket_item_test)
-    print(basket_price[:5])
+    
 
     class Basket:
         def __init__(self, basket_id, basket_item, cost):
@@ -79,9 +80,7 @@ def start(event, context):
         purchase = Basket(i, basket_items[i], basket_price[i])
         basket_sep.append(purchase)
     
-    print(basket_sep[5].basket_item)
-    print("hello world")
-
+    
     host = os.getenv("DB_HOST")
     port = int(os.getenv("DB_PORT"))
     user = os.getenv("DB_USER")
@@ -114,14 +113,19 @@ def start(event, context):
         sys.exit(1)
 
     print('connected')
-    
+    print('going to transactions now')
     try:
-        cursor = conn.cursor()
-        for person in transactions_today:
-            cursor.execute(f"INSERT INTO transactions_group1 (transaction_id, total, customer_name, date_time, location) VALUES ('{person.transaction_id}', '{person.total}', '{person.customer_name}', '{person.date}', '{person.location}')")
-            conn.commit()
-        cursor.close()
-        
+        with conn.cursor() as cursor:
+            psycopg2.extras.execute_values(cursor, """
+                INSERT INTO transactions_group1 VALUES %s;
+            """, [(
+                transaction.transaction_id,
+                transaction.total,
+                transaction.customer_name,
+                transaction.date,
+                transaction.location
+            ) for transaction in transactions_today])
+            conn.commit()    
     
     except Exception as ERROR:
         print("Execution Issue: " + str(ERROR))
@@ -129,13 +133,16 @@ def start(event, context):
     print('going to basket now')
 
     try:
-        cursor = conn.cursor()
-        for basket in basket_sep:
-            cursor.execute(f"insert into basket_group1 (basket_id, basket_item, cost) values ('{basket.basket_id}', '{basket.basket_item}', '{basket.cost}')")
-            conn.commit()
-        cursor.close()
-        conn.close()
-    
+        with conn.cursor() as cursor:
+            psycopg2.extras.execute_values(cursor, """
+                INSERT INTO basket_group1 VALUES %s;
+            """, [(
+                transaction.basket_id,
+                transaction.basket_item,
+                transaction.cost,
+            ) for transaction in basket_sep])
+            conn.commit()  
+            conn.close() 
 
     except Exception as ERROR:
         print("Execution Issue: " + str(ERROR))
@@ -145,5 +152,4 @@ def start(event, context):
 
     print('executed statement')
 
-    # con = psycopg2.connect(
-    #     "dbname=dev host=redshift-cluster-1.cduzkj2qjmlq.eu-west-2.redshift.amazonaws.com port=5439 user=test password=Password1")
+   
