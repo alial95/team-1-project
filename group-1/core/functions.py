@@ -52,6 +52,7 @@ def get_basket_item():
         basket_item_test = basket_item.strip(' -')
         basket_items.append(basket_item_test)
     return basket_items
+    
 def get_basket_price():
     for i in new['basket']:
         basket_price = []
