@@ -29,24 +29,20 @@ def start(event, context):
     customers = list(customer)
     
     class Transaction:
-        def __init__(self, transaction_id, total, customer_name, date, location):
-            self.transaction_id= transaction_id
+        def __init__(self, total, customer_name, date, location):
             self.total = total
             self.customer_name = customer_name
             self.date = date
             self.location = location
         def __repr__(self):
             return f'Customer name is {self.customer_name}.'
-    # fill bucket list
+    # fill transaction list
     transactions_today = []
     for i in range(1, len(df)):
-        customer = Transaction(i-1, total[i], customers[i], dates[i], location[i])
+        customer = Transaction(total[i], customers[i], dates[i], location[i])
         transactions_today.append(customer)
     
-    transaction_ids = []
-    for i in transactions_today:
-        trans_id = i.transaction_id
-        transaction_ids.append(trans_id)
+    
 
     # create comma-separated strings
     def chainer(s):
@@ -70,14 +66,13 @@ def start(event, context):
     
 
     class Basket:
-        def __init__(self, basket_id, basket_item, cost):
-            self.basket_id = basket_id
+        def __init__(self, basket_item, cost):
             self.basket_item = basket_item
             self.cost = cost
     basket_sep = []
     # fill our basket list with the basket objects
     for i in range(0, len(new['basket'])):
-        purchase = Basket(i, basket_items[i], basket_price[i])
+        purchase = Basket(basket_items[i], basket_price[i])
         basket_sep.append(purchase)
     
     
@@ -111,15 +106,14 @@ def start(event, context):
     except Exception as ERROR:
         print("Connection Issue: " + str(ERROR))
         sys.exit(1)
-
+    
     print('connected')
     print('going to transactions now')
     try:
         with conn.cursor() as cursor:
             psycopg2.extras.execute_values(cursor, """
-                INSERT INTO transactions_group1 VALUES %s;
+                INSERT INTO transactions_group1 (total, customer_name, date_time, location) VALUES %s;
             """, [(
-                transaction.transaction_id,
                 transaction.total,
                 transaction.customer_name,
                 transaction.date,
@@ -135,9 +129,8 @@ def start(event, context):
     try:
         with conn.cursor() as cursor:
             psycopg2.extras.execute_values(cursor, """
-                INSERT INTO basket_group1 VALUES %s;
+                INSERT INTO basket_group1 (basket_item, cost) VALUES %s;
             """, [(
-                transaction.basket_id,
                 transaction.basket_item,
                 transaction.cost,
             ) for transaction in basket_sep])
