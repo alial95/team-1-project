@@ -1,7 +1,6 @@
 service: group-1
 plugins:
   - serverless-python-requirements
-
 provider:
   name: aws
   stage: dev
