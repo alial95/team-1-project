@@ -8,6 +8,9 @@ provider:
 
 package:
   individually: true
+  exclude:
+    - node_modules/**
+    - local_*
 
 functions:
   group-1:
