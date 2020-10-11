@@ -1,7 +1,6 @@
 service: group-1
 plugins:
   - serverless-python-requirements
-
 provider:
   name: aws
   stage: dev
@@ -9,6 +8,9 @@ provider:
 
 package:
   individually: true
+  exclude:
+    - node_modules/**
+    - local_*
 
 functions:
   group-1:
