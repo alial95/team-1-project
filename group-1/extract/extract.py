@@ -4,8 +4,10 @@ import pandas as pd
 queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/Group-1-Extract-Q'
 
 
-
 def start(event, context):
+
+    print('TEST STATEMENT')
+    print('second test')
 
     sqs = boto3.client('sqs')
     s3 = boto3.client('s3')
