@@ -34,13 +34,30 @@ def start(event, context):
                 'Dates_for_purchases': {
                     'DataType': 'String',
                     'StringValue': test_df['date'][i]
-                    }
+                    },
+                'Location': {
+                    'DataType': 'String',
+                    'StringValue': test_df['location'][i]
+                },
+                 'Customer_name': {
+                    'DataType': 'String',
+                    'StringValue': test_df['customer_name'][i]
+                },
+                 'Basket_total': {
+                    'DataType': 'String',
+                    'StringValue': test_df['basket'][i]
+                },
+                 'Pay_amount': {
+                    'DataType': 'String',
+                    'StringValue': test_df['pay_amount'][i]
+                }
                 }, 
+
             MessageBody=(
-                test_df['date'][i],
-                test_df['location'][i],
-                test_df['customer_name'][i],
-                test_df['basket'][i],
+                test_df['date'][i] ,
+                test_df['location'][i] ,
+                test_df['customer_name'][i] ,
+                test_df['basket'][i] ,
                 str(test_df['pay_amount'][i])
                 )
             
