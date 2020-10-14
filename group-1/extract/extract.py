@@ -34,7 +34,7 @@ def start(event, context):
                 'Dates_for_purchases': {
                     'DataType': 'String',
                     'StringValue': test_df['date'][i]
-                    }
+                    },
                 'Location': {
                     'DataType': 'String',
                     'StringValue': test_df['location'][i]
