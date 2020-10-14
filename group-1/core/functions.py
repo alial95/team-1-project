@@ -1,26 +1,38 @@
 import boto3
 import pandas as pd
 import numpy as np
+import boto3
 from itertools import chain
-from classes.transaction import Transaction
-from classes.basket import Basket
+# from classes.transaction import Transaction
+# from classes.basket import Basket
 
 # connect to bucket and get bucket key
 s3 = boto3.client('s3')
 response = s3.list_objects(Bucket='cafe-transactions')
-first_step = response['Contents'][-1]
-key = first_step['Key']
+first_step = response['Contents']
+keys = []
+for key in first_step:
+    # print(key['Key'])
+    keys.append(key['Key'])
+
 
 bucket = 'cafe-transactions'
 path = f's3://{bucket}/{key}'
-# read bucket contents and sort them into variables
-df = pd.read_csv(path, names=['date', 'location', 'customer_name', 'basket', 'pay_amount', 'payment_method', 'ccn'])
-dates = df['date']
-basket = df['basket']
-location = df['location']
-total = df['pay_amount']
-customer = df['customer_name']
-customers = list(customer)
+dataframes = []
+for csv in keys:
+    path = f's3://{bucket}/{csv}'
+    df = pd.read_csv(path, names=['date', 'location', 'customer_name', 'basket', 'pay_amount', 'payment_method', 'ccn'])
+    dataframes.append(df)
+print(dataframes)
+
+
+# dates = df['date']
+# basket = df['basket']
+# location = df['location']
+# total = df['pay_amount']
+# customer = df['customer_name']
+# customers = list(customer)
+
 
 
 # fill transaction list

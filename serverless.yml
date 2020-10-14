@@ -11,9 +11,17 @@ package:
   exclude:
     - node_modules/**
     - local_*
+    - env/**
 
 functions:
-  group-1:
+  # group-1:
+  #   runtime: python3.8
+  #   handler: handler.start
+  #   module: group-1
+  group-1-extract:
     runtime: python3.8
-    handler: handler.start
-    module: group-1
+    handler: extract.start
+    module: group-1/extract
+
+  # sqs: arn:aws:sqs:eu-west-1:579154747729:Group-1-Extract-Q
+
