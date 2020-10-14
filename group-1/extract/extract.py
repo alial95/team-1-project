@@ -49,7 +49,7 @@ def start(event, context):
                 },
                  'Pay_amount': {
                     'DataType': 'String',
-                    'StringValue': test_df['pay_amount'][i]
+                    'StringValue': str(test_df['pay_amount'][i])
                 }
                 }, 
 
