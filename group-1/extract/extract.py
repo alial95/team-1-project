@@ -7,6 +7,8 @@ queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/Group-1-Extract-Q'
 
 def start(event, context):
 
+    print('TEST STATEMENT')
+
     sqs = boto3.client('sqs')
     s3 = boto3.client('s3')
     response = s3.list_objects(Bucket='cafe-transactions')
