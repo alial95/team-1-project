@@ -52,7 +52,7 @@ def start(event, context):
                  'Pay_amount': {
                     'DataType': 'String',
                     'StringValue': str(test_df['pay_amount'][i])
-                }
+                } 
                 }, 
 
                 MessageBody = 'Test_String'
