@@ -23,8 +23,8 @@ iamRoleStatements: # IAM role statements so that services can be accessed in the
       - redshift: GetClusterCredentials
       - redshift: DescribeClusters
       - redshift-data: ExecuteStatement
-    Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-transform
-    
+    Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-load
+
   - Effect: 'Allow'
     Action:
       - sqs: SendMessage
