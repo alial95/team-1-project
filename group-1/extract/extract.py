@@ -35,12 +35,13 @@ def start(event, context):
                     'DataType': 'String',
                     'StringValue': test_df['date'][i]
                     }
+                    
                 }, 
             MessageBody=(
-                test_df['date'][i],
-                test_df['location'][i],
-                test_df['customer_name'][i],
-                test_df['basket'][i],
+                test_df['date'][i] ,
+                test_df['location'][i] ,
+                test_df['customer_name'][i] ,
+                test_df['basket'][i] ,
                 str(test_df['pay_amount'][i])
                 )
             
