@@ -52,4 +52,8 @@ def start(event, context):
                     'StringValue': str(test_df['pay_amount'][i])
                 }
                 }, 
+
+                MessageBody = 'Test_String'
         )
+
+    
