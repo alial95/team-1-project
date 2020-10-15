@@ -38,7 +38,7 @@ functions:
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
-          - sqs:SendMessage
+          - sqs:*
         Resource: !GetAtt ExtractToLoad.Arn
       - Effect: 'Allow'
         Action:
