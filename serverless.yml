@@ -12,25 +12,10 @@ provider:
     DB_PASS: '*y3EoPZH*Luazyc#%i^xS#jc%n5$WSY^o%PThw!U'
     DB_PORT: 5439
     DB_USER: 'awsuser'
-
+  
   
 
-
-iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
-  - Effect: 'Allow'
-    Action:
-      - sqs: ReceiveMessage
-      - redshift: GetClusterCredentials
-      - redshift: DescribeClusters
-      - redshift-data: ExecuteStatement
-    Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-transform
-    
-  - Effect: 'Allow'
-    Action:
-      - sqs: SendMessage
-      - s3: GetObject
-      - s3: ListBucket
-    Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-extract
+ 
 
 package:
   individually: true
@@ -47,7 +32,14 @@ functions:
   group-1-extract:
     runtime: python3.8
     handler: extract.start
-    module: group-1/extract 
+    module: group-1/extract
+    iamRoleStatements:
+      - Effect: 'Allow'
+      Action:
+        - sqs: SendMessage
+        - s3: GetObject
+        - s3: ListBucket
+      Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-extract 
 
   group-1-load:
     runtime: python3.8
@@ -56,6 +48,20 @@ functions:
     events:
       - sqs:
           arn: arn:aws:sqs:eu-west-1:579154747729:Group-1-Extract-Q
+    iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
+      - Effect: 'Allow'
+        Action:
+          - sqs: ReceiveMessage
+          - redshift: GetClusterCredentials
+          - redshift: DescribeClusters
+          - redshift-data: ExecuteStatement
+        Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-load
+    vpc:
+        securityGroupIds:
+          - sg-03601054033ee65d6
+          - sg-04ffa039212cd915c
+        subnetIds:
+          - subnet-0b0c0f6ea99bda1ee
     
 
   # sqs: arn:aws:sqs:eu-west-1:579154747729:Group-1-Extract-Q
