@@ -28,34 +28,34 @@ def start(event, context):
     #     dataframes.append(df)
 
     # for dataframe in dataframes:
-    for i in range(1, len(test_df)):
+    
 
-        response = sqs.send_message(
-            QueueUrl = queue_url,
-            MessageAttributes = {
-                'Dates_for_purchases': {
-                    'DataType': 'String',
-                    'StringValue': test_df['date'][i]
-                    },
-                'Location': {
-                    'DataType': 'String',
-                    'StringValue': test_df['location'][i]
+    response = sqs.send_message(
+        QueueUrl = queue_url,
+        MessageAttributes = {
+            'Dates_for_purchases': {
+                'DataType': 'String',
+                'StringValue': test_df['date']
                 },
-                 'Customer_name': {
-                    'DataType': 'String',
-                    'StringValue': test_df['customer_name'][i]
-                },
-                 'Basket_total': {
-                    'DataType': 'String',
-                    'StringValue': test_df['basket'][i]
-                },
-                 'Pay_amount': {
-                    'DataType': 'String',
-                    'StringValue': str(test_df['pay_amount'][i])
-                } 
-                }, 
+            'Location': {
+                'DataType': 'String',
+                'StringValue': test_df['location']
+            },
+                'Customer_name': {
+                'DataType': 'String',
+                'StringValue': test_df['customer_name']
+            },
+                'Basket_total': {
+                'DataType': 'String',
+                'StringValue': test_df['basket']
+            },
+                'Pay_amount': {
+                'DataType': 'String',
+                'StringValue': str(test_df['pay_amount'])
+            } 
+            }, 
 
-                MessageBody = 'Test_String'
-        )
+            MessageBody = 'Test_String'
+    )
 
     
