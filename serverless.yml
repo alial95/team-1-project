@@ -12,11 +12,8 @@ provider:
     DB_PASS: '*y3EoPZH*Luazyc#%i^xS#jc%n5$WSY^o%PThw!U'
     DB_PORT: 5439
     DB_USER: 'awsuser'
-
   
-
-
-iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
+  iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
   - Effect: 'Allow'
     Action:
       - sqs: ReceiveMessage
