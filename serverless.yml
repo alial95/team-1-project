@@ -38,9 +38,7 @@ functions:
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
-          - sqs:ReceiveMessage
           - sqs:SendMessage
-          - sqs:GetQueueUrl
         Resource: !GetAtt ExtractToLoad.Arn
       - Effect: 'Allow'
         Action:
