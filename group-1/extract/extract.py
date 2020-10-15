@@ -1,5 +1,6 @@
 import boto3
 import pandas as pd
+import json
 
 queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-load'
 
@@ -26,36 +27,32 @@ def start(event, context):
     #     path = f's3://{bucket}/{csv}'
     #     df = pd.read_csv(path, names=['date', 'location', 'customer_name', 'basket', 'pay_amount', 'payment_method', 'ccn'])
     #     dataframes.append(df)
+    raw_transactions = []
+    for i in range(1, len(test_df)):
+        transaction = {
+            'date': test_df['date'][i],
+            'location': test_df['location'][i],
+            'customer_name': test_df['customer_name'][i],
+            'basket': test_df['basket'][i],
+            'total': test_df['pay_amount'][i]
+        }
+        raw_transactions.append(transaction)
+    json_data = json.dumps(raw_transactions) 
+    
+    queue_url = sqs.get_queue_url(
+        QueueName='extract-to-load',
+
+        )
+
+
+
 
     # for dataframe in dataframes:
     
 
     response = sqs.send_message(
         QueueUrl = queue_url,
-        MessageAttributes = {
-            'Dates_for_purchases': {
-                'DataType': 'String',
-                'StringValue': test_df['date']
-                },
-            'Location': {
-                'DataType': 'String',
-                'StringValue': test_df['location']
-            },
-                'Customer_name': {
-                'DataType': 'String',
-                'StringValue': test_df['customer_name']
-            },
-                'Basket_total': {
-                'DataType': 'String',
-                'StringValue': test_df['basket']
-            },
-                'Pay_amount': {
-                'DataType': 'String',
-                'StringValue': str(test_df['pay_amount'])
-            } 
-            }, 
-
-            MessageBody = 'Test_String'
+        MessageBody = json_data
     )
 
     

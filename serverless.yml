@@ -47,7 +47,33 @@ functions:
         Resource: 
           - arn:aws:s3:::cafe-transactions
           - arn:aws:s3:::cafe-transactions/*
-  group-1-load:
+  # group-1-load:
+  #   runtime: python3.8
+  #   handler: transform.start
+  #   module: group-1/transform
+  #   events:
+  #     - sqs:
+  #         arn: !GetAtt ExtractToLoad.Arn
+  #   iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
+  #     - Effect: 'Allow'
+  #       Action:
+  #         - sqs:ReceiveMessage
+  #       Resource: !GetAtt ExtractToLoad.Arn
+  #     - Effect: 'Allow'
+  #       Action:
+  #         - redshift:GetClusterCredentials
+  #         - redshift:DescribeClusters
+  #         - redshift-data:ExecuteStatement
+  #       Resource: 
+  #         - arn:aws:redshift:eu-west-1:579154747729:dbuser:bir1-cluster/awsuser
+  #         - arn:aws:redshift:eu-west-1:579154747729:dbname:bir1-cluster/dev
+  #   vpc:
+  #     securityGroupIds:
+  #       - sg-03601054033ee65d6
+  #       - sg-04ffa039212cd915c
+  #     subnetIds:
+  #       - subnet-0b0c0f6ea99bda1ee
+  group-1-transform:
     runtime: python3.8
     handler: transform.start
     module: group-1/transform
@@ -58,21 +84,10 @@ functions:
       - Effect: 'Allow'
         Action:
           - sqs:ReceiveMessage
-        Resource: !GetAtt ExtractToLoad.Arn
-      - Effect: 'Allow'
-        Action:
-          - redshift:GetClusterCredentials
-          - redshift:DescribeClusters
-          - redshift-data:ExecuteStatement
-        Resource: 
-          - arn:aws:redshift:eu-west-1:579154747729:dbuser:bir1-cluster/awsuser
-          - arn:aws:redshift:eu-west-1:579154747729:dbname:bir1-cluster/dev
-    vpc:
-      securityGroupIds:
-        - sg-03601054033ee65d6
-        - sg-04ffa039212cd915c
-      subnetIds:
-        - subnet-0b0c0f6ea99bda1ee
+          - sqs:SendMessage
+          - sqs:GetQueueUrl
+        Resource: !GetAtt TransformToLoad.Arn
+
     
 
 resources:
@@ -81,4 +96,9 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: extract-to-load
+    TransformToLoad:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: transform-to-load
+      
 
