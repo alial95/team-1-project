@@ -30,6 +30,9 @@ functions:
     runtime: python3.8
     handler: extract.start
     module: group-1/extract
+    events:
+      - sqs:
+          arn: !GetAtt ExtractToLoad.Arn
     # events:
     #    - s3:
     #       bucket: cafe-transactions
@@ -38,7 +41,9 @@ functions:
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
-          - sqs:*
+          - sqs:ReceiveMessage
+          - sqs:SendMessage
+          - sqs:GetQueueUrl
         Resource: !GetAtt ExtractToLoad.Arn
       - Effect: 'Allow'
         Action:
@@ -51,9 +56,6 @@ functions:
     runtime: python3.8
     handler: transform.start
     module: group-1/transform
-    events:
-      - sqs:
-          arn: !GetAtt ExtractToLoad.Arn
     iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
       - Effect: 'Allow'
         Action:
