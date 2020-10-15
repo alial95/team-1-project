@@ -64,11 +64,11 @@ def start(event, context):
                psycopg2.extras.execute_values(cursor, """
                     INSERT INTO transactions_group1 (total, customer_name, date_time, location) VALUES %s;
                """, [(
-                    total,
-                    customer_name,
-                    date,
-                    location      
-               ) ])
+                    total[i],
+                    customer_name[i],
+                    date[i],
+                    location[i]      
+               ) for i in range (1, len(date))])
                conn.commit()    
 
      except Exception as ERROR:
