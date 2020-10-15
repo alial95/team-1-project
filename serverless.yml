@@ -30,11 +30,11 @@ functions:
     runtime: python3.8
     handler: extract.start
     module: group-1/extract
-    events:
-       - s3:
-          bucket: cafe-transactions
-          event: s3:ObjectCreated:*
-          existing: true 
+    # events:
+    #    - s3:
+    #       bucket: cafe-transactions
+    #       event: s3:ObjectCreated:*
+    #       existing: true 
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
