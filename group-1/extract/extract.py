@@ -1,7 +1,7 @@
 import boto3
 import pandas as pd
 
-queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/Group-1-Extract-Q'
+queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-load'
 
 
 def start(event, context):
