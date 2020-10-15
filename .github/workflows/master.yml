@@ -13,7 +13,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - run: npm install serverless-python-requirements
+    - run: npm install serverless-python-requirements serverless-iam-roles-per-function
     #- run: npm ci
     - name: serverless deploy
       uses: jackdcasey/github-action@python3.8-nodejs13
