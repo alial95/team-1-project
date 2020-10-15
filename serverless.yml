@@ -64,7 +64,9 @@ functions:
           - redshift:GetClusterCredentials
           - redshift:DescribeClusters
           - redshift-data:ExecuteStatement
-        Resource: arn:aws:redshift:eu-west-1:579154747729:dbuser:bir1-cluster/awsuser
+        Resource: 
+          - arn:aws:redshift:eu-west-1:579154747729:dbuser:bir1-cluster/awsuser
+          - arn:aws:redshift:eu-west-1:579154747729:dbname:bir1-cluster/dev
     vpc:
       securityGroupIds:
         - sg-03601054033ee65d6

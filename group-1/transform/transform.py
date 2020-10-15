@@ -44,7 +44,8 @@ def start(event, context):
                ClusterIdentifier=cluster,
                DurationSeconds=3600) # Length of time access is granted
      except Exception as ERROR:
-          print("Credentials Issue: " + str(ERROR))
+          return ("Credentials Issue: " + str(ERROR))
+          
           
 
      try:
@@ -55,7 +56,7 @@ def start(event, context):
                port=port,
                host=host)
      except Exception as ERROR:
-          print("Connection Issue: " + str(ERROR))
+          return ("Connection Issue: " + str(ERROR))
 
      try:
           with conn.cursor() as cursor:
@@ -70,7 +71,7 @@ def start(event, context):
                conn.commit()    
 
      except Exception as ERROR:
-        print("Execution Issue: " + str(ERROR))
+          return ("Execution Issue: " + str(ERROR))
     
     
     
