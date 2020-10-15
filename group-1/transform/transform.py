@@ -14,7 +14,7 @@ def start(event, context):
      customer_name = event['Records'][0]['messageAttributes']['Customer_name']['stringValue']
      basket = event['Records'][0]['messageAttributes']['Basket_total']['stringValue']
      total = event['Records'][0]['messageAttributes']['Pay_amount']['stringValue']
-
+     print(date)
      
      basket_items_1 = basket.split(',')
      basket_items = []
@@ -44,8 +44,9 @@ def start(event, context):
                ClusterIdentifier=cluster,
                DurationSeconds=3600) # Length of time access is granted
      except Exception as ERROR:
-          return ("Credentials Issue: " + str(ERROR))
-          
+          return {
+               'message': ("Credentials Issue: " + str(ERROR))
+          }
           
 
      try:
