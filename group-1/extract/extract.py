@@ -39,10 +39,11 @@ def start(event, context):
         raw_transactions.append(transaction)
     json_data = json.dumps(raw_transactions) 
     
-    queue_url = sqs.get_queue_url(
-        QueueName='extract-to-load',
+    # queue_url = sqs.get_queue_url(
+    #     QueueName='extract-to-load',
 
-        )
+    #     )
+    queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-load'
 
 
 
@@ -51,7 +52,7 @@ def start(event, context):
     
 
     response = sqs.send_message(
-        QueueUrl = queue_url,
+        QueueUrl = queue_url_1,
         MessageBody = json_data
     )
 

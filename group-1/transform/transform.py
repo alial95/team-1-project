@@ -58,20 +58,20 @@ def start(event, context):
      basket_json = json.dumps(clean_basket)
 
 
-     queue_url = sqs.get_queue_url(
-          QueueName='transform-to-load',
-          )
-
+     # queue_url = sqs.get_queue_url(
+     #      QueueName='transform-to-load',
+     #      )
+     queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/transform-to-load'
 
 
      response_transaction = sqs.send_message(
-        QueueUrl = queue_url,
+        QueueUrl = queue_url_1,
         MessageBody = transactions_json
      
      )
 
      send_basket = sqs.send_message(
-          QueueUrl = queue_url,
+          QueueUrl = queue_url_1,
           MessageBody = basket_json
      )
      # host = os.getenv("DB_HOST")
