@@ -39,7 +39,7 @@ functions:
       - Effect: 'Allow'
         Action:
           - sqs:SendMessage
-        Resource: !GetAtt ExtractToLoad.Arn
+        Resource: arn:aws:sqs:eu-west-1:579154747729:extract-to-load
       - Effect: 'Allow'
         Action:
           - s3:GetObject
