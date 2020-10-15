@@ -35,11 +35,11 @@ functions:
     module: group-1/extract
     iamRoleStatements:
       - Effect: 'Allow'
-      Action:
-        - sqs: SendMessage
-        - s3: GetObject
-        - s3: ListBucket
-      Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-extract 
+        Action:
+          - sqs: SendMessage
+          - s3: GetObject
+          - s3: ListBucket
+        Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-extract 
 
   group-1-load:
     runtime: python3.8
