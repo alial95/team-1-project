@@ -34,11 +34,11 @@ functions:
     runtime: python3.8
     handler: extract.start
     module: group-1/extract
-    # iamRoleStatements:
-    #   - Effect: 'Allow'
-    #     Action:
-    #       - sqs:SendMessage
-    #     Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-extract 
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - sqs:SendMessage
+        Resource: !GetAtt ExtractToLoad.Arn
     #   - Effect: 'Allow'
     #     Action:
     #       - sqs:SendMessage
@@ -49,9 +49,9 @@ functions:
   #   runtime: python3.8
   #   handler: transform.start
   #   module: group-1/transform
-  #   events:
-  #     - sqs:
-  #         arn: arn:aws:sqs:eu-west-1:579154747729:Group-1-Extract-Q
+  # events:
+  #   - sqs:
+  #       arn: arn:aws:sqs:eu-west-1:579154747729:Group-1-Extract-Q
   #   iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
   #     - Effect: 'Allow'
   #       Action:
@@ -70,7 +70,7 @@ functions:
 
 resources:
   Resources:
-    extract-to-load: 
+    ExtractToLoad: 
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: extract-to-load
