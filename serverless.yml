@@ -1,6 +1,7 @@
 service: group-1
 plugins:
   - serverless-python-requirements
+  - serverless-iam-roles-per-function
 provider:
   name: aws
   stage: dev
