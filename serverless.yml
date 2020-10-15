@@ -26,10 +26,6 @@ package:
     - env/**
 
 functions:
-  # group-1:
-  #   runtime: python3.8
-  #   handler: handler.start
-  #   module: group-1
   group-1-extract:
     runtime: python3.8
     handler: extract.start
@@ -39,33 +35,37 @@ functions:
         Action:
           - sqs:SendMessage
         Resource: !GetAtt ExtractToLoad.Arn
-    #   - Effect: 'Allow'
-    #     Action:
-    #       - sqs:SendMessage
-    #       - s3:GetObject
-    #       - s3:ListBucket
-    #     Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-extract
-  # group-1-load:
-  #   runtime: python3.8
-  #   handler: transform.start
-  #   module: group-1/transform
-  # events:
-  #   - sqs:
-  #       arn: arn:aws:sqs:eu-west-1:579154747729:Group-1-Extract-Q
-  #   iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
-  #     - Effect: 'Allow'
-  #       Action:
-  #         - sqs:ReceiveMessage
-  #         - redshift:GetClusterCredentials
-  #         - redshift:DescribeClusters
-  #         - redshift-data:ExecuteStatement
-  #       Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-load
-  #   vpc:
-  #       securityGroupIds:
-  #         - sg-03601054033ee65d6
-  #         - sg-04ffa039212cd915c
-  #       subnetIds:
-  #         - subnet-0b0c0f6ea99bda1ee
+      - Effect: 'Allow'
+        Action:
+          - s3:GetObject
+          - s3:ListBucket
+        Resource: 
+          - arn:aws:s3:::cafe-transactions
+          - arn:aws:s3:::cafe-transactions/*
+  group-1-load:
+    runtime: python3.8
+    handler: transform.start
+    module: group-1/transform
+    events:
+      - sqs:
+          arn: !GetAtt ExtractToLoad.Arn
+      iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
+        - Effect: 'Allow'
+          Action:
+            - sqs:ReceiveMessage
+          Resource: !GetAtt ExtractToLoad.Arn
+        - Effect: 'Allow'
+          Action:
+            - redshift:GetClusterCredentials
+            - redshift:DescribeClusters
+            - redshift-data:ExecuteStatement
+          Resource: arn:aws:redshift:eu-west-1:579154747729:cluster:bir1-cluster
+        vpc:
+        securityGroupIds:
+          - sg-03601054033ee65d6
+          - sg-04ffa039212cd915c
+        subnetIds:
+          - subnet-0b0c0f6ea99bda1ee
     
 
 resources:
