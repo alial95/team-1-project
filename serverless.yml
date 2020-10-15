@@ -34,6 +34,7 @@ functions:
        - s3:
           bucket: cafe-transactions
           event: s3:ObjectCreated:*
+          existing: true 
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
