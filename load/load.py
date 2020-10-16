@@ -122,20 +122,21 @@ def start(event, context):
     Data = []
     print(event['Records'][0]['body'])
     record = event['Records'][0]['body']
-    # for record in event['Records'][0]['body']:
-    #     json_string = json.loads(record)
-    #     Data.append(json_string)
-    json_string = json.loads(record)
-    # for string in Data:
-    for i in json_string:
+    print(len(record))
+    for i in record:
+        json_string = json.loads(i)
+        Data.append(json_string)
+    # json_string = json.loads(record)
+    for string in Data:
+        for i in json_string:
 
-        if 'date' in i:
+            if 'date' in i:
 
-            transactions.append(record)
+                transactions.append(record)
 
-        else:
+            else:
 
-            basket.append(record)
+                basket.append(record)
 
     redshift_call = redShift()
     redshift_call.get_cluster_cred()
