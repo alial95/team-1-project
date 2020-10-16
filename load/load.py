@@ -118,12 +118,13 @@ def start(event, context):
     basket = []
     transactions = []
     print(event['Records'][0]['body'])
+    record = event['Records'][0]['body']
+    # for record in event['Records'][0]['body']:
 
-    for record in event['Records'][0]['body']:
-
-        json_string = json.loads(record)
-        Data.append(json_string)
-
+    #     json_string = json.loads(record)
+    #     Data.append(json_string)
+    json_string = json.loads(record)
+    Data.append(json_string)
     for record in Data:
 
         if record['date'] == True:
