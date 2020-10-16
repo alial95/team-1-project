@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class redShift:
+    
 
     def __init__(self):
         pass
@@ -14,6 +15,7 @@ class redShift:
 
     def get_cluster_cred(self):
         global conn
+        
         host = os.getenv("DB_HOST")
         port = int(os.getenv("DB_PORT"))
         user = os.getenv("DB_USER")
@@ -55,10 +57,10 @@ class redShift:
     def truncate_basket(self):
         try:
             with conn.cursor() as cursor:
-            cursor.execute ("TRUNCATE TABLE basket_group1")
-            cursor.commit()
+                cursor.execute("TRUNCATE TABLE basket_group1")
+                cursor.commit()
 
-         except Exception as ERROR:
+        except Exception as ERROR:
             return {
                 ("Basket truncate issue: " + str(ERROR))
             }
@@ -84,8 +86,8 @@ class redShift:
     def truncate_transaction(self):
             try:
                 with conn.cursor() as cursor:
-                cursor.execute ("TRUNCATE TABLE transactions_group1")
-                cursor.commit()
+                    cursor.execute ("TRUNCATE TABLE transactions_group1")
+                    cursor.commit()
 
             except Exception as ERROR:
                 return {
@@ -108,6 +110,7 @@ class redShift:
             except Exception as ERROR:
                 return {
                     ("Execution transaction Issue: " + str(ERROR))
+                }
 
 def start(event, context):
 
