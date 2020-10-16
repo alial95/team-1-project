@@ -132,11 +132,11 @@ def start(event, context):
 
         if 'date' in i:
 
-            transactions.append(record)
+            transactions.append(i)
 
         else:
 
-            basket.append(record)
+            basket.append(i)
 
     redshift_call = redShift()
     redshift_call.get_cluster_cred()

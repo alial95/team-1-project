@@ -53,7 +53,7 @@ functions:
     module: load
     events:
       - sqs:
-          arn: !GetAtt ExtractToLoad.Arn
+          arn: !GetAtt TransformToLoad.Arn
     iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
       - Effect: 'Allow'
         Action:
