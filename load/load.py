@@ -117,6 +117,7 @@ def start(event, context):
     Data = []
     basket = []
     transactions = []
+    print(event['Records'][0]['body'])
 
     for record in event['Records'][0]['body']:
 
