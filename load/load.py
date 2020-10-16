@@ -121,7 +121,7 @@ def start(event, context):
 
     for record in event['Records'][0]['body']:
 
-        json_string = json.load(record)
+        json_string = json.loads(record)
         Data.append(json_string)
 
     for record in Data:
