@@ -73,8 +73,13 @@ def start(event, context):
 
      response = sqs.send_message(
         QueueUrl = queue_url_1,
-        MessageBody = (transactions_json +
-        basket_json
+        MessageBody = (basket_json
+        )
+     )
+
+     response = sqs.send_message(
+        QueueUrl = queue_url_1,
+        MessageBody = (transactions_json
         )
      )
 
