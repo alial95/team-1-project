@@ -58,7 +58,7 @@ functions:
       - Effect: 'Allow'
         Action:
           - sqs:ReceiveMessage
-        Resource: !GetAtt ExtractToLoad.Arn
+        Resource: !GetAtt TransformToLoad.Arn
       - Effect: 'Allow'
         Action:
           - redshift:GetClusterCredentials
@@ -73,7 +73,6 @@ functions:
         - sg-04ffa039212cd915c
       subnetIds:
         - subnet-0b0c0f6ea99bda1ee
-        
   group-1-transform:
     runtime: python3.8
     handler: transform.start
@@ -102,3 +101,4 @@ resources:
       Properties:
         QueueName: transform-to-load
       
+
