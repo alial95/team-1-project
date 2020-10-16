@@ -113,8 +113,8 @@ class redShift:
                 }
 
 def start(event, context):
-
-    Data = []
+    
+    
     basket = []
     transactions = []
     print(event['Records'][0]['body'])
@@ -124,10 +124,9 @@ def start(event, context):
     #     json_string = json.loads(record)
     #     Data.append(json_string)
     json_string = json.loads(record)
-    Data.append(json_string)
-    for record in Data:
+    for record in json_string:
 
-        if record['date'] == True:
+        if 'date' in record:
 
             transactions.append(record)
 
