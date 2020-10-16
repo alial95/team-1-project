@@ -85,7 +85,7 @@ functions:
         Action:
           - sqs:ReceiveMessage
           - sqs:SendMessage
-          - sqs:GetQueueUrl
+          # - sqs:GetQueueUrl
         Resource: !GetAtt TransformToLoad.Arn
 
     

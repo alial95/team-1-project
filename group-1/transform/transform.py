@@ -33,21 +33,27 @@ def start(event, context):
      transactions_json = json.dumps(cleaned_transactions) 
 
 
-
-
+     baskets_1 = []
+     for basket in baskets:
+         test_basket = basket.split(',')
+         baskets_1.append(test_basket)
+     
+     
+     
      basket_items = []
-     for item in baskets:
-          item.split(',')
-          basket_items.append(item)
      prices = []
      clean_basket_items = []
+     for item in baskets_1:
+         basket_test = item[0].split(',')
+         basket_items.append(basket_test)
+     
      for item in basket_items:
-          price = item[-5:]
-          basket_item = item.strip(f'{price}').strip(' -')
-          clean_basket_items.append(basket_item)
-          prices.append(price)
-     print(prices[0])
-     print(clean_basket_items[0])
+         price = item[0][-5:]
+         basket_item = item[0].strip(f'{price}').strip(' -')
+         clean_basket_items.append(basket_item)
+         prices.append(price)
+
+     
      clean_basket = []
      for i in range(1, len(prices)):
           basket = {
@@ -64,63 +70,15 @@ def start(event, context):
      queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/transform-to-load'
 
 
-     response_transaction = sqs.send_message(
+     response = sqs.send_message(
         QueueUrl = queue_url_1,
-        MessageBody = transactions_json
-     
+        MessageBody = (transactions_json,
+        basket_json
+        )
      )
 
-     send_basket = sqs.send_message(
-          QueueUrl = queue_url_1,
-          MessageBody = basket_json
-     )
-     # host = os.getenv("DB_HOST")
-     # port = int(os.getenv("DB_PORT"))
-     # user = os.getenv("DB_USER")
-     # passwd = os.getenv("DB_PASS")
-     # db = os.getenv("DB_NAME")
-     # cluster = os.getenv("DB_CLUSTER")
-     
-     # print('Got credentials')
-
-     # try:
-     #      client = boto3.client('redshift')
-     #      creds = client.get_cluster_credentials(  # Lambda needs these permissions as well DataAPI permissions
-     #           DbUser=user,
-     #           DbName=db,
-     #           ClusterIdentifier=cluster,
-     #           DurationSeconds=3600) # Length of time access is granted
-     # except Exception as ERROR:
-     #      return {
-     #           'message': ("Credentials Issue: " + str(ERROR))
-     #      }
-          
-
-     # try:
-     #      conn = psycopg2.connect(
-     #           dbname=db,
-     #           user=creds["DbUser"],
-     #           password=creds["DbPassword"],
-     #           port=port,
-     #           host=host)
-     # except Exception as ERROR:
-     #      return ("Connection Issue: " + str(ERROR))
-
-     # try:
-     #      with conn.cursor() as cursor:
-     #           psycopg2.extras.execute_values(cursor, """
-     #                INSERT INTO transactions_group1 (total, customer_name, date_time, location) VALUES %s;
-     #           """, [(
-     #                total[i],
-     #                customer_name[i],
-     #                date[i],
-     #                location[i]      
-     #           ) for i in range (1, len(date))])
-     #           conn.commit()    
-
-     # except Exception as ERROR:
-     #      return ("Execution Issue: " + str(ERROR))
     
+     
     
     
     
