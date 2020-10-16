@@ -6,6 +6,7 @@ queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-load'
 
 
 def start(event, context):
+    print('running extract lambda')
     # key = event['Records'][0]['s3']['object']['key']
     # bucket = event['Records'][0]['s3']['bucket']['name']
 
