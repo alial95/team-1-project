@@ -101,7 +101,7 @@ class redShift:
                     INSERT INTO transactions_group1 (total, customer_name, date_time, location) VALUES %s;
                 """, [(
                     i['total'],
-                    i['customer'],
+                    i['customer_name'],
                     i['date'],
                     i['location']
                 ) for i in transaction_list])

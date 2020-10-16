@@ -4,6 +4,7 @@ import json
 sqs = boto3.client('sqs')
 
 def start(event, context):
+     print('lambda running')
     
      # transform the data
 
@@ -72,7 +73,7 @@ def start(event, context):
 
      response = sqs.send_message(
         QueueUrl = queue_url_1,
-        MessageBody = (transactions_json,
+        MessageBody = (transactions_json +
         basket_json
         )
      )
