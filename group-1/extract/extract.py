@@ -10,7 +10,7 @@ def start(event, context):
     # key = event['Records'][0]['s3']['object']['key']
     # bucket = event['Records'][0]['s3']['bucket']['name']
 
-    print('TEST STATEMENT')
+    print('TEST STATEMENT.')
     print('second test')
 
     sqs = boto3.client('sqs')
