@@ -37,7 +37,7 @@ class redShift:
             return {
                 'message': ("Credentials Issue: " + str(ERROR))
             }
-        
+        print('Got credentials')
         try:
         
             conn = psycopg2.connect(
@@ -51,9 +51,9 @@ class redShift:
         except Exception as ERROR:
             
             return {
-                ("Connection Issue: " + str(ERROR))
+                'Error message': "Connection issue: " + str(ERROR)
             }
-    
+        print('Connected')
     def truncate_basket(self):
         try:
             with conn.cursor() as cursor:
@@ -62,9 +62,9 @@ class redShift:
 
         except Exception as ERROR:
             return {
-                ("Basket truncate issue: " + str(ERROR))
+                'Error message': "Truncate basket issue: " + str(ERROR)
             }
-    
+        print('Basket truncated')
 
     def insert_into_basket(self,basket_list):
         try:
@@ -77,40 +77,41 @@ class redShift:
                     
                 ) for i in basket_list])
                 conn.commit()
+        
+        except Exception as ERROR:
+            return {
+                'Error message': "Insert into basket issue: " + str(ERROR)
+            }
+        print('Inserted into basket')
+    def truncate_transaction(self):
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute ("TRUNCATE TABLE transactions_group1")
+                cursor.commit()
 
         except Exception as ERROR:
             return {
-                ("Execution basket Issue: " + str(ERROR))
+                'Error message': "Transaction truncate issue: " + str(ERROR)
             }
-
-    def truncate_transaction(self):
-            try:
-                with conn.cursor() as cursor:
-                    cursor.execute ("TRUNCATE TABLE transactions_group1")
-                    cursor.commit()
-
-            except Exception as ERROR:
-                return {
-                    ("Transaction truncate issue: " + str(ERROR))
-                }
-
+        print('Transactions table truncated')
     def insert_into_transaction(self,transaction_list):
-            try:
-                with conn.cursor() as cursor:
-                    psycopg2.extras.execute_values(cursor, """
-                        INSERT INTO transactions_group1 (total, customer_name, date_time, location) VALUES %s;
-                    """, [(
-                        i['total'],
-                        i['customer'],
-                        i['date'],
-                        i['location']
-                    ) for i in transaction_list])
-                    conn.commit()
+        try:
+            with conn.cursor() as cursor:
+                psycopg2.extras.execute_values(cursor, """
+                    INSERT INTO transactions_group1 (total, customer_name, date_time, location) VALUES %s;
+                """, [(
+                    i['total'],
+                    i['customer'],
+                    i['date'],
+                    i['location']
+                ) for i in transaction_list])
+                conn.commit()
 
-            except Exception as ERROR:
-                return {
-                    ("Execution transaction Issue: " + str(ERROR))
-                }
+        except Exception as ERROR:
+            return {
+                'Error message': "Inser into transaction issue: " + str(ERROR)
+            }
+        print('Inserted into transactions')
 
 def start(event, context):
     
