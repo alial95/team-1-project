@@ -109,11 +109,12 @@ class redShift:
 
         except Exception as ERROR:
             return {
-                'Error message': "Inser into transaction issue: " + str(ERROR)
+                'Error message': "Insert into transaction issue: " + str(ERROR)
             }
         print('Inserted into transactions')
 
 def start(event, context):
+    print('lambda is running')
     
     
     basket = []
