@@ -114,7 +114,7 @@ class redShift:
         print('Inserted into transactions')
 
 def start(event, context):
-    print('lambda is running')
+    print('lambda is running now')
     
     
     basket = []
