@@ -96,9 +96,20 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: extract-to-load
-    TransformToLoad:
+    # TransformToLoad:
+    #   Type: "AWS::SQS::Queue"
+    #   Properties:
+    #     QueueName: transform-to-load
+    TransformToLoad: 
+        Type: AWS::SQS::Queue
+        Properties: 
+          RedrivePolicy: 
+            deadLetterTargetArn: !GetAtt DeadLetterQueue
+            maxReceiveCount: 5
+          QueueName: transform-to-load    
+    DeadLetterQueue:
       Type: "AWS::SQS::Queue"
       Properties:
-        QueueName: transform-to-load
-      
+        QueueName: group-1-dlq
+
 

@@ -126,7 +126,7 @@ def start(event, context):
     #     json_string = json.loads(i)
     #     Data.append(json_string)
     json_string = json.loads(record)
-    print(len(json_string))
+    # print(len(json_string))
     # for string in Data:
     for i in json_string:
 
