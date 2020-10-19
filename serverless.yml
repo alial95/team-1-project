@@ -36,7 +36,7 @@ functions:
           event: s3:ObjectCreated:Put
           existing: true 
     iamRoleStatements:
-      - Effect:
+      - Effect: 'Allow'
         Action:
           - lambda:InvokeAsync
           - lambda:InvokeFunction
