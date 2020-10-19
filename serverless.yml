@@ -79,7 +79,7 @@ functions:
     module: group-1/transform
     events:
       - sqs:
-          arn: !GetAtt ExtractToLoad.Arn
+          arn: !GetAtt ExtractToTransform.Arn
     iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
       - Effect: 'Allow'
         Action:
