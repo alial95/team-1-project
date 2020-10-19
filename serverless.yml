@@ -30,23 +30,23 @@ functions:
     runtime: python3.8
     handler: extract.start
     module: group-1/extract
-    # events:
-    #    - s3:
-    #       bucket: cafe-transactions
-    #       event: s3:ObjectCreated:*
-    #       existing: true 
+    events:
+       - s3:
+          bucket: cafe-transactions-group-1
+          event: s3:ObjectCreated:Put
+          existing: true 
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
           - sqs:SendMessage
-        Resource: !GetAtt ExtractToLoad.Arn
+        Resource: !GetAtt ExtractToTransform.Arn
       - Effect: 'Allow'
         Action:
-          - s3:GetObject
-          - s3:ListBucket
+          - s3:Get*
+          - s3:List*
         Resource: 
-          - arn:aws:s3:::cafe-transactions
-          - arn:aws:s3:::cafe-transactions/*
+          - arn:aws:s3:::cafe-transactions-group-1
+          - arn:aws:s3:::cafe-transactions-group-1/*
   group-1-load:
     runtime: python3.8
     handler: load.start
@@ -92,10 +92,10 @@ functions:
 
 resources:
   Resources:
-    ExtractToLoad: 
+    ExtractToTransform: 
       Type: "AWS::SQS::Queue"
       Properties:
-        QueueName: extract-to-load
+        QueueName: extract-to-transform
     # TransformToLoad:
     #   Type: "AWS::SQS::Queue"
     #   Properties:
