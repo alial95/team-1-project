@@ -104,7 +104,7 @@ resources:
         Type: AWS::SQS::Queue
         Properties: 
           RedrivePolicy: 
-            deadLetterTargetArn: !GetAtt DeadLetterQueue
+            deadLetterTargetArn: !GetAtt DeadLetterQueue.Arn
             maxReceiveCount: 5
           QueueName: transform-to-load    
     DeadLetterQueue:
