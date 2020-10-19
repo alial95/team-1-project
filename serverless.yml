@@ -39,7 +39,7 @@ functions:
       - Effect: 'Allow'
         Action:
           - lambda:InvokeFunction
-        Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-extract
+        Resource: arn:aws:logs:eu-west-1:579154747729:log-group:/aws/lambda/group-1-dev-group-1-extract:*:*
       - Effect: 'Allow'
         Action:
           - sqs:SendMessage
