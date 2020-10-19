@@ -36,6 +36,11 @@ functions:
           event: s3:ObjectCreated:Put
           existing: true 
     iamRoleStatements:
+      - Effect:
+        Action:
+          - lambda:InvokeAsync
+          - lambda:InvokeFunction
+        Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-extract
       - Effect: 'Allow'
         Action:
           - sqs:SendMessage
