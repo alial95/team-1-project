@@ -38,7 +38,6 @@ functions:
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
-          - lambda:InvokeAsync
           - lambda:InvokeFunction
         Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-extract
       - Effect: 'Allow'
