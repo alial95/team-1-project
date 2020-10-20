@@ -46,8 +46,8 @@ functions:
         Resource: !GetAtt ExtractToTransform.Arn
       - Effect: 'Allow'
         Action:
-          - s3:Get*
-          - s3:List*
+          - s3:GetObject
+          - s3:ListBucket
         Resource: 
           - arn:aws:s3:::cafe-transactions-group-1
           - arn:aws:s3:::cafe-transactions-group-1/*
