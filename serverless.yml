@@ -32,9 +32,9 @@ functions:
     module: group-1/extract
     events:
       - s3:
-        bucket: cafe-transactions-group-1
-        event: s3:ObjectCreated:*
-        existing: true
+         bucket: cafe-transactions-group-1
+         event: s3:ObjectCreated:Put
+         existing: true
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
@@ -56,7 +56,11 @@ functions:
     handler: load.start
     module: load
     events:
-      - sqs:
+      - s3:
+        bucket: cafe-transactions
+        event: s3:ObjectCreated:Put
+        existing: true
+      - sqs:       
           arn: !GetAtt TransformToLoad.Arn
     iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
       - Effect: 'Allow'
@@ -115,6 +119,9 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: group-1-dlq
+    # myS3Bucket:
+    #   Type: AWS::S3::Bucket
+    #   DeletionPolicy: Retain
 
    
 
