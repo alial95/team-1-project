@@ -48,7 +48,7 @@ def start(event, context):
     #     QueueName='extract-to-load',
 
     #     )
-    queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-load'
+    queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-transform'
 
 
 
