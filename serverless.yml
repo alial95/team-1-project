@@ -32,7 +32,7 @@ functions:
     module: group-1/extract
     events:
        - s3:
-          bucket: group1-testbucket
+          bucket: cafe-transactions-group-1
           event: s3:ObjectCreated:Put
           existing: true 
     iamRoleStatements:
@@ -49,8 +49,8 @@ functions:
           - s3:Get*
           - s3:List*
         Resource: 
-          - arn:aws:s3:::group1-testbucket
-          - arn:aws:s3:::group1-testbucket/*
+          - arn:aws:s3:::cafe-transactions-group-1
+          - arn:aws:s3:::cafe-transactions-group-1/*
   group-1-load:
     runtime: python3.8
     handler: load.start
