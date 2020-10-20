@@ -98,12 +98,13 @@ class redShift:
         try:
             with conn.cursor() as cursor:
                 psycopg2.extras.execute_values(cursor, """
-                    INSERT INTO transactions_group1 (total, customer_name, date_time, location) VALUES %s;
+                    INSERT INTO transactions_group1 (total, customer_name, location, calendar_day, transaction_time) VALUES %s;
                 """, [(
                     i['total'],
                     i['customer_name'],
-                    i['date'],
-                    i['location']
+                    i['location'],
+                    i['calendar_day'],
+                    i['time_of_day'],
                 ) for i in transaction_list])
                 conn.commit()
 
@@ -130,7 +131,7 @@ def start(event, context):
     # for string in Data:
     for i in json_string:
 
-        if 'date' in i:
+        if 'calendar_day' in i:
 
             transactions.append(i)
 
