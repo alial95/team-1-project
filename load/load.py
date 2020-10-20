@@ -137,6 +137,7 @@ def start(event, context):
         else:
 
             basket.append(i)
+    print(len(basket))
 
     redshift_call = redShift()
     redshift_call.get_cluster_cred()
