@@ -141,7 +141,7 @@ def start(event, context):
 
     redshift_call = redShift()
     redshift_call.get_cluster_cred()
-    redshift_call.truncate_basket()
-    redshift_call.truncate_transaction()
-    redshift_call.insert_into_transaction(transactions)
+    # redshift_call.truncate_basket()
+    # redshift_call.truncate_transaction()
     redshift_call.insert_into_basket(basket)
+    redshift_call.insert_into_transaction(transactions)
