@@ -22,10 +22,23 @@ def start(event, context):
           location.append(transaction['location'])
           names.append(transaction['customer_name'])
           total.append(transaction['total'])
+          
+          
+     calendar_day = []
+     time_of_day = []
+     for date in dates:
+          times = date[-5:]
+          calendar_date = date.strip(f'{times}')
+          calendar_day.append(calendar_date)
+          time_of_day.append(times)     
+          
+ 
+          
      cleaned_transactions = []
      for i in range(1, len(dates)):
         transaction = {
-            'date': dates[i],
+            'calendar_day': calendar_day[i],
+            'time_of_day': time_of_day[i],
             'location': location[i],
             'customer_name': names[i],
             'total': total[i]
@@ -33,13 +46,16 @@ def start(event, context):
         cleaned_transactions.append(transaction)
      transactions_json = json.dumps(cleaned_transactions) 
 
+     
+
+   
 
      baskets_1 = []
      for basket in baskets:
          test_basket = basket.split(',')
          baskets_1.append(test_basket)
      
-     
+ 
      
      basket_items = []
      prices = []
