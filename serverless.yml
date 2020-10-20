@@ -35,11 +35,11 @@ functions:
         bucket: cafe-transactions-group-1
         event: s3:ObjectCreated:Put
         existing: true
-      - schedule:
-        name: 'Group1TestTrigger'
-        description: 'trigger lambda every five minutes for testing'
-        rate: rate(5 minutes)
-        enabled: true
+      # - schedule:
+      #   name: 'Group1TestTrigger'
+      #   description: 'trigger lambda every five minutes for testing'
+      #   rate: rate(5 minutes)
+      #   enabled: true
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
