@@ -31,10 +31,10 @@ functions:
     handler: extract.start
     module: group-1/extract
     events:
-      - s3:
-        bucket: cafe-transactions-group-1
-        event: s3:ObjectCreated:Put
-        existing: true
+       - s3:
+         bucket: cafe-transactions-group-1
+         event: s3:ObjectCreated:Put
+         existing: true
       # - schedule:
       #   name: 'Group1TestTrigger'
       #   description: 'trigger lambda every five minutes for testing'
