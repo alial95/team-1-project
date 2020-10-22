@@ -15,7 +15,7 @@ class redShift:
 
     def get_cluster_cred(self):
         global conn
-        
+        #Joab woz ear
         host = os.getenv("DB_HOST")
         port = int(os.getenv("DB_PORT"))
         user = os.getenv("DB_USER")
