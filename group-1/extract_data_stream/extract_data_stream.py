@@ -1,6 +1,8 @@
 import base64
 import json
 
+# perhaps use regex expressions to identify patterns in the data stream
+
 def start(event, context):
     
     output = []
