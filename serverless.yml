@@ -14,10 +14,6 @@ provider:
     DB_PORT: 5439
     DB_USER: 'awsuser'
   
-  
-
- 
-
 package:
   individually: true
   exclude:
@@ -26,6 +22,27 @@ package:
     - env/**
 
 functions:
+  
+  group-1-ds-extract:
+    runtime: python3.8
+    handler: extract_data_stream.start
+    module: group-1/extract_data_stream
+    events: 
+      - stream:
+        arn: arn:aws:kinesis:eu-west-1:579154747729:stream/store-stream
+        batchSize: 100
+        maximumRetryAttempts: 10
+        enabled: false
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - lambda:InvokeFunction
+        Resource: arn:aws:lambda:eu-west-1:579154747729:function:group-1-dev-group-1-ds-extract
+      - Effect: 'Allow'
+        Action:
+          - sqs:SendMessage
+        Resource: !GetAtt ExtractToTransform.Arn
+  
   group-1-extract:
     runtime: python3.8
     handler: extract.start
@@ -51,6 +68,7 @@ functions:
         Resource: 
           - arn:aws:s3:::cafe-transactions-group-1
           - arn:aws:s3:::cafe-transactions-group-1/*
+  
   group-1-load:
     runtime: python3.8
     handler: load.start
