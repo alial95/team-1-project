@@ -15,11 +15,11 @@ def start(event, context):
     test_df = pd.read_csv(path, names=[
                           'date', 'location', 'customer_name', 'basket', 'pay_amount', 'payment_method', 'ccn'])
 
-    print(json.dumps({'recordCount': len(test_df), 'fileName': key})
+    print(json.dumps({'recordCount': len(test_df), 'fileName': key}))
 
-    raw_transactions=[]
+    raw_transactions = []
     for i in range(1, len(test_df)):
-        transaction={
+        transaction = {
             'date': test_df['date'][i],
             'location': test_df['location'][i],
             'customer_name': test_df['customer_name'][i],
@@ -27,15 +27,14 @@ def start(event, context):
             'total': str(test_df['pay_amount'][i])
         }
         raw_transactions.append(transaction)
-    json_data=json.dumps(raw_transactions)
+    json_data = json.dumps(raw_transactions)
 
-    queue_url_1='https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-transform'
-
+    queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-transform'
 
     # connect to sqs
-    sqs=boto3.client('sqs')
+    sqs = boto3.client('sqs')
     # send the message
-    response=sqs.send_message(
+    response = sqs.send_message(
         QueueUrl=queue_url_1,
         MessageBody=json_data
     )
