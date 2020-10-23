@@ -84,7 +84,7 @@ def start(event, context):
      # queue_url = sqs.get_queue_url(
      #      QueueName='transform-to-load',
      #      )
-     queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/transform-to-load'
+     queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/g1-transform-to-load'
 
 
      response = sqs.send_message(

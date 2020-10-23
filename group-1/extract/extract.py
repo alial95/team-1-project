@@ -29,7 +29,7 @@ def start(event, context):
         raw_transactions.append(transaction)
     json_data = json.dumps(raw_transactions)
 
-    queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-transform'
+    queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/g1-extract-to-transform'
 
     # connect to sqs
     sqs = boto3.client('sqs')
