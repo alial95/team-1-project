@@ -6,6 +6,8 @@ provider:
   name: aws
   stage: dev
   region: eu-west-1
+  timeout: 300
+  memorySize: 2048
   environment:
     DB_CLUSTER: 'bir1-cluster'
     DB_HOST: 10.0.1.223
