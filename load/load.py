@@ -8,14 +8,11 @@ load_dotenv()
 
 class redShift:
     
-
     def __init__(self):
         pass
 
-
     def get_cluster_cred(self):
         global conn
-        #Joab woz ear
         host = os.getenv("DB_HOST")
         port = int(os.getenv("DB_PORT"))
         user = os.getenv("DB_USER")
@@ -54,17 +51,6 @@ class redShift:
                 'Error message': "Connection issue: " + str(ERROR)
             }
         print('Connected')
-    def truncate_basket(self):
-        try:
-            with conn.cursor() as cursor:
-                cursor.execute("TRUNCATE TABLE basket_group1")
-                cursor.commit()
-
-        except Exception as ERROR:
-            return {
-                'Error message': "Truncate basket issue: " + str(ERROR)
-            }
-        print('Basket truncated')
 
     def insert_into_basket(self,basket_list):
         try:
@@ -83,17 +69,7 @@ class redShift:
                 'Error message': "Insert into basket issue: " + str(ERROR)
             }
         print('Inserted into basket')
-    def truncate_transaction(self):
-        try:
-            with conn.cursor() as cursor:
-                cursor.execute ("TRUNCATE TABLE transactions_group1")
-                cursor.commit()
-
-        except Exception as ERROR:
-            return {
-                'Error message': "Transaction truncate issue: " + str(ERROR)
-            }
-        print('Transactions table truncated')
+    
     def insert_into_transaction(self,transaction_list):
         try:
             with conn.cursor() as cursor:
@@ -115,34 +91,24 @@ class redShift:
         print('Inserted into transactions')
 
 def start(event, context):
-    print('lambda is running now')
-    
-    
-    basket = []
+    baskets = []
     transactions = []
-    # Data = []
-    print(event['Records'][0]['body'])
-    record = event['Records'][0]['body']
-    # for i in record:
-    #     json_string = json.loads(i)
-    #     Data.append(json_string)
-    json_string = json.loads(record)
-    # print(len(json_string))
-    # for string in Data:
-    for i in json_string:
-
-        if 'calendar_day' in i:
-
-            transactions.append(i)
-
-        else:
-
-            basket.append(i)
-    print(len(basket))
-
+    
     redshift_call = redShift()
     redshift_call.get_cluster_cred()
-    # redshift_call.truncate_basket()
-    # redshift_call.truncate_transaction()
-    redshift_call.insert_into_basket(basket)
+    
+    for record in event['Records']:      
+        json_string = json.loads(record['body'])
+        for i in json_string:
+            if 'calendar_day' in i:
+                transactions.append(i)
+            else:
+                baskets.append(i)
+
+    redshift_call.insert_into_basket(baskets)
     redshift_call.insert_into_transaction(transactions)
+
+    print(json.dumps({
+        'baskets' : len(baskets), 
+        'transactions':len(transactions)
+    }))
