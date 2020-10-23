@@ -113,14 +113,14 @@ resources:
     ExtractToTransform: 
       Type: "AWS::SQS::Queue"
       Properties:
-        QueueName: extract-to-transform
+        QueueName: g1-extract-to-transform
     TransformToLoad: 
         Type: AWS::SQS::Queue
         Properties: 
           RedrivePolicy: 
             deadLetterTargetArn: !GetAtt transformToLoadDLQ.Arn
             maxReceiveCount: 5
-          QueueName: transform-to-load    
+          QueueName: g1-transform-to-load    
     transformToLoadDLQ:
       Type: "AWS::SQS::Queue"
       Properties:
