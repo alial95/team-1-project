@@ -84,5 +84,5 @@ def start(event, context):
           )
           
      record_count = len(event['Records'])
-     print(json.dumps({ 'recordCount': recordCount }))
+     print(json.dumps({ 'recordCount': record_count }))
 
