@@ -114,10 +114,6 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: extract-to-transform
-    # TransformToLoad:
-    #   Type: "AWS::SQS::Queue"
-    #   Properties:
-    #     QueueName: transform-to-load
     TransformToLoad: 
         Type: AWS::SQS::Queue
         Properties: 
@@ -129,9 +125,7 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: group-1-dlq
-    # myS3Bucket:
-    #   Type: AWS::S3::Bucket
-    #   DeletionPolicy: Retain
+    
 
    
 
