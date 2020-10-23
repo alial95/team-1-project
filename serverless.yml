@@ -1,4 +1,4 @@
-service: group-1
+service: group-1-stack
 plugins:
   - serverless-python-requirements
   - serverless-iam-roles-per-function
