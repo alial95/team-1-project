@@ -29,7 +29,7 @@ functions:
     runtime: python3.8
     handler: extract_data_stream.start
     module: group-1/extract_data_stream
-    events: 
+    events:
       - stream:
         arn: arn:aws:kinesis:eu-west-1:579154747729:stream/store-stream
         batchSize: 100
@@ -121,7 +121,7 @@ resources:
         Properties: 
           RedrivePolicy: 
             deadLetterTargetArn: !GetAtt transformToLoadDLQ.Arn
-            maxReceiveCount: 5
+            maxReceiveCount: 2
           QueueName: g1-transform-to-load    
     transformToLoadDLQ:
       Type: "AWS::SQS::Queue"
