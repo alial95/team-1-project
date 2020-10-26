@@ -20,7 +20,9 @@ def start(event, context):
                location.append(transaction['location'])
                names.append(transaction['customer_name'])
                total.append(transaction['total'])
-
+          print(json.dumps({
+               'Location' : location[0]
+          }))
           calendar_day = []
           time_of_day = []
           for date in dates:
@@ -43,8 +45,11 @@ def start(event, context):
           
           baskets_1 = []
           for basket in baskets:
-              test_basket = basket.split(',')
-              baskets_1.append(test_basket)
+               print(json.dumps({
+                    'basket string' : basket
+               }))
+               test_basket = basket.split(',')
+               baskets_1.append(test_basket)
 
           basket_items = []
           prices = []
@@ -70,16 +75,15 @@ def start(event, context):
 
           queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/g1-transform-to-load'
 
-          response = sqs.send_message(
+          sqs.send_message(
              QueueUrl = queue_url,
              MessageBody = basket_json
           )
 
-          response = sqs.send_message(
+          sqs.send_message(
              QueueUrl = queue_url,
              MessageBody = transactions_json
           )
           
      record_count = len(event['Records'])
      print(json.dumps({ 'recordCount': record_count }))
-
