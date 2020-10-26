@@ -11,10 +11,9 @@ def start(event, context):
      for record in event['Records']:
           json_data = json.loads(record['body'])
           for transaction in json_data:
+               print(transaction)
                transaction_obj = Transaction(transaction['date'][:-5], transaction['date'][-5:], transaction['location'], transaction['customer_name'], transaction['total'])
                transactions.append(transaction_obj)
-               print(type(transaction['basket']))
-               print(transaction['basket'])
                basket_items = transaction['basket'].split(',')
                for item in basket_items:
                     price = item[0][-5:]

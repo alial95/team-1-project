@@ -26,6 +26,7 @@ def start(event, context):
             'basket': test_df['basket'][i],
             'total': str(test_df['pay_amount'][i])
         }
+        print(transaction)
         raw_transactions.append(transaction)
     json_data = json.dumps(raw_transactions)
 
