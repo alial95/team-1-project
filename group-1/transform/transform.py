@@ -7,18 +7,15 @@ def start(event, context):
      print('lambda running')
     
      for record in event['Records']:
-          raw_transactions_string = record['body']
-
-          raw_transactions_string = event['Records'][0]['body']
-          raw_transactions = json.loads(raw_transactions_string)
+          json_data = json.loads(record['body'])
           baskets = []
           dates= []
           location = []
           names = []
           total = []
-          for transaction in raw_transactions:
+          for transaction in json_data:
                baskets.append(transaction['basket'])
-          for transaction in raw_transactions:
+          for transaction in json_data:
                dates.append(transaction['date'])
                location.append(transaction['location'])
                names.append(transaction['customer_name'])
