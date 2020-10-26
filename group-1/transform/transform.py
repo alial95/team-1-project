@@ -28,7 +28,7 @@ def start(event, context):
           time_of_day = []
           for date in dates:
                times = date[-5:]
-               calendar_date = date.strip(f'{times}')
+               calendar_date = date[:-5]
                calendar_day.append(calendar_date)
                time_of_day.append(times)     
 

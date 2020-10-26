@@ -96,14 +96,17 @@ def start(event, context):
     
     redshift_call = redShift()
     redshift_call.get_cluster_cred()
-    
+    basket_count = 0
+    transactions_count = 0
     for record in event['Records']:      
         json_string = json.loads(record['body'])
         for i in json_string:
             if 'calendar_day' in i:
                 transactions.append(i)
+                transactions_count += 1
             else:
                 baskets.append(i)
+                basket_count += 1
 
     redshift_call.insert_into_basket(baskets)
     redshift_call.insert_into_transaction(transactions)
@@ -111,4 +114,8 @@ def start(event, context):
     print(json.dumps({
         'baskets' : len(baskets), 
         'transactions':len(transactions)
+    }))
+    print(json.dumps({
+        'baskets processed' : basket_count,
+        'transactions_processed' : transactions_count
     }))
