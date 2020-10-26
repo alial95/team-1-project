@@ -11,7 +11,6 @@ def start(event, context):
      for record in event['Records']:
           json_data = json.loads(record['body'])
           for transaction in json_data:
-               print(transaction)
                transaction_obj = Transaction(transaction['date'][:-5], transaction['date'][-5:], transaction['location'], transaction['customer_name'], transaction['total'])
                transactions.append(transaction_obj)
                basket_items = transaction['basket'].split(',')
@@ -23,11 +22,11 @@ def start(event, context):
           cleaned_transactions = []
           for transaction in transactions:
              transaction_dict = {
-                 'calendar_day': transaction[0],
-                 'time_of_day': transaction[1],
-                 'location': transaction[2],
-                 'customer_name': transaction[3],
-                 'total': transaction[4]
+                 'calendar_day': transaction.date,
+                 'time_of_day': transaction.time,
+                 'location': transaction.location,
+                 'customer_name': transaction.customer,
+                 'total': transaction.total
              }
              cleaned_transactions.append(transaction_dict)
           transactions_json = json.dumps(cleaned_transactions) 
@@ -36,8 +35,8 @@ def start(event, context):
           clean_basket = []
           for basket in baskets:
                basket_dict = {
-                    'Basket_item': basket[0],
-                    'Price': basket[1]
+                    'Basket_item': basket.basket_item,
+                    'Price': basket.price
                }
                clean_basket.append(basket_dict)
           basket_json = json.dumps(clean_basket)

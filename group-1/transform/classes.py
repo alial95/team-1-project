@@ -10,4 +10,5 @@ class Transaction:
 class Basket:
     def __init__(self, basket_item, price):
         self.basket_item = basket_item
+        self.price = price
         
