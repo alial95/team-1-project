@@ -1,14 +1,8 @@
 import boto3
 import pandas as pd
 import json
+
 from core.functions import send_message
-
-queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-load'
-# purpose?
-
-def connect_to_s3():
-    
-def extract_from_s3():
 
 def start(event, context):
     # get the csv and bucket name for read_csv function
@@ -20,13 +14,13 @@ def start(event, context):
                           'date', 'location', 'customer_name', 'basket', 'pay_amount', 'payment_method', 'ccn'])
 
     raw_transactions = []
-    for i in range(1, len(test_df)):
+    for i in range(1, len(read_dataframe)):
         transaction = {
-            'date': test_df['date'][i],
-            'location': test_df['location'][i],
-            'customer_name': test_df['customer_name'][i],
-            'basket': test_df['basket'][i],
-            'total': str(test_df['pay_amount'][i])
+            'date': read_dataframe['date'][i],
+            'location': read_dataframe['location'][i],
+            'customer_name': read_dataframe['customer_name'][i],
+            'basket': read_dataframe['basket'][i],
+            'total': str(read_dataframe['pay_amount'][i])
         }
         raw_transactions.append(transaction)
     json_data = json.dumps(raw_transactions)
