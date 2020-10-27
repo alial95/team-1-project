@@ -32,7 +32,7 @@ functions:
       - stream:
           arn: arn:aws:kinesis:eu-west-1:579154747729:stream/store-stream
           batchSize: 100
-          maximumRetryAttempts: 10
+          maximumRetryAttempts: 2
           enabled: true
     iamRoleStatements:
       - Effect: 'Allow'
