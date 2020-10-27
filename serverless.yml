@@ -30,7 +30,7 @@ functions:
     module: group-1/extract_data_stream
     events:
       - stream:
-          arn: arn:aws:kinesis:eu-west-1:579154747729:stream/store-stream
+          arn: arn:aws:kinesis:eu-west-1:579154747729:stream/group-1-test-stream
           batchSize: 100
           maximumRetryAttempts: 2
           enabled: true
@@ -42,7 +42,7 @@ functions:
       - Effect: 'Allow'
         Action:
           - kinesis:GetRecords
-        Resource: arn:aws:kinesis:eu-west-1:579154747729:stream/store-stream
+        Resource: arn:aws:kinesis:eu-west-1:579154747729:stream/group-1-test-stream
         
   
   group-1-extract:
