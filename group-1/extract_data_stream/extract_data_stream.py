@@ -7,7 +7,7 @@ def start(event, context):
     
     output = []
 
-    for record in event['records'] :
+    for record in event['records']:
         print(record['recordId'])
         decoded_data = base64.b64decode(record['data']).decode('utf-8')
         print(decoded_data)
