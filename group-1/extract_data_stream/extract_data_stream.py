@@ -8,7 +8,7 @@ def start(event, context):
     output = []
 
     for record in event['Records']:
-        print(record['recordId'])
+        print(record)
         decoded_data = base64.b64decode(record['data']).decode('utf-8')
         print(decoded_data)
         reading = json.loads(decoded_data)
