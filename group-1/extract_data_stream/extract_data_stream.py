@@ -9,7 +9,7 @@ def start(event, context):
 
     for record in event['Records']:
         print(record)
-        decoded_data = base64.b64decode(record['data']).decode('utf-8')
+        decoded_data = base64.b64decode(record['kinesis']['data']).decode('utf-8')
         print(decoded_data)
         reading = json.loads(decoded_data)
         print(reading)
