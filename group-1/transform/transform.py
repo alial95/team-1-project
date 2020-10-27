@@ -3,7 +3,7 @@ import json
 from classes import Transaction, Basket
 from functions import send_message
 
-sqs = boto3.client('sqs')
+# sqs = boto3.client('sqs')
           
 def cleaned_transactions(transactions):
      

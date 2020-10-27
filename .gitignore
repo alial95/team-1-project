@@ -17,6 +17,11 @@ var/
 *.egg
 node_modules
 .vscode
+awscliv2.zip
+aws
+venv/
+*.csv
+*.pyc
 
 # Serverless directories
 .serverless

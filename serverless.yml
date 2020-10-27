@@ -24,7 +24,6 @@ package:
     - env/**
 
 functions:
-  
   group-1-ds-extract:
     runtime: python3.8
     handler: extract_data_stream.start
@@ -34,7 +33,7 @@ functions:
         arn: arn:aws:kinesis:eu-west-1:579154747729:stream/store-stream
         batchSize: 100
         maximumRetryAttempts: 10
-        enabled: false
+        enabled: true
     iamRoleStatements:
       - Effect: 'Allow'
         Action:

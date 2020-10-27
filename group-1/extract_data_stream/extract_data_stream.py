@@ -24,12 +24,12 @@ def start(event, context):
     print('Processed {} records.'.format(len(event['records'])))
 
     # connect to sqs
-    sqs = boto3.client('sqs')
-    # send the message
+    # sqs = boto3.client('sqs')
+    # # send the message
     
-    response = sqs.send_message(
-        QueueUrl = queue_url_1,
-        MessageBody = json_data
-    )
+    # response = sqs.send_message(
+    #     QueueUrl = queue_url_1,
+    #     MessageBody = json_data
+    # )
     
     return {'records': output}

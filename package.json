@@ -15,7 +15,9 @@
     "url": "https://github.com/data-engineering-bir-1/team-1-project/issues"
   },
   "homepage": "https://github.com/data-engineering-bir-1/team-1-project#readme",
-  "dependencies": {},
+  "dependencies": {
+    "serverless-iam-roles-per-function": "^2.0.2"
+  },
   "description": "",
   "devDependencies": {
     "serverless-python-requirements": "^5.1.0"
