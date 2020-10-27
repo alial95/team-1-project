@@ -39,6 +39,11 @@ functions:
         Action:
           - sqs:SendMessage
         Resource: !GetAtt ExtractToTransform.Arn
+      - Effect: 'Allow'
+        Action:
+          - kinesis:GetRecords
+        Resource: arn:aws:kinesis:eu-west-1:579154747729:stream/store-stream
+        
   
   group-1-extract:
     runtime: python3.8
