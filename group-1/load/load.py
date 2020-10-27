@@ -116,6 +116,5 @@ def start(event, context):
         'transactions':len(transactions)
     }))
     print(json.dumps({
-        'baskets processed' : basket_count,
-        'transactions_processed' : transactions_count
+        'transaction processed' : transactions[0]['location']
     }))
