@@ -2,7 +2,7 @@ import boto3
 import pandas as pd
 import json
 
-from core.functions import send_message
+from functions import send_message
 
 def start(event, context):
     # get the csv and bucket name for read_csv function

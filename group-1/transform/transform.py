@@ -1,7 +1,7 @@
 import boto3
 import json
 from classes import Transaction, Basket
-from core.functions import send_message
+from functions import send_message
 
 sqs = boto3.client('sqs')
           
