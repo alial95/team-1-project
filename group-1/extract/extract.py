@@ -1,9 +1,14 @@
 import boto3
 import pandas as pd
 import json
+from core.functions import send_message
 
 queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/extract-to-load'
+# purpose?
 
+def connect_to_s3():
+    
+def extract_from_s3():
 
 def start(event, context):
     # get the csv and bucket name for read_csv function
@@ -11,10 +16,8 @@ def start(event, context):
     bucket = event['Records'][0]['s3']['bucket']['name']
 
     path = f's3://{bucket}/{key}'
-    test_df = pd.read_csv(path, names=[
+    read_dataframe = pd.read_csv(path, names=[
                           'date', 'location', 'customer_name', 'basket', 'pay_amount', 'payment_method', 'ccn'])
-
-
 
     raw_transactions = []
     for i in range(1, len(test_df)):
@@ -30,10 +33,5 @@ def start(event, context):
 
     queue_url_1 = 'https://sqs.eu-west-1.amazonaws.com/579154747729/g1-extract-to-transform'
 
-    # connect to sqs
-    sqs = boto3.client('sqs')
-    # send the message
-    response = sqs.send_message(
-        QueueUrl=queue_url_1,
-        MessageBody=json_data
-    )
+    send_message(json_data, queue_url_1)
+

@@ -1,6 +1,7 @@
 import boto3
 import json
 from classes import Transaction, Basket
+from core.functions import send_message
 
 sqs = boto3.client('sqs')
           
@@ -37,14 +38,6 @@ def cleaned_basket(baskets):
      
      return clean_basket
 
-def send_message(json_data):
-     
-     queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/g1-transform-to-load'
-
-     sqs.send_message(
-          QueueUrl = queue_url,
-          MessageBody = json_data
-     )
      
 def get_object_price_and_item(basket_items):
      for item in basket_items:
@@ -59,6 +52,7 @@ def start(event, context):
      
      transactions = []
      baskets = []
+     queue_url = 'https://sqs.eu-west-1.amazonaws.com/579154747729/g1-transform-to-load'
      
      for record in event['Records']:
      
@@ -76,8 +70,8 @@ def start(event, context):
           transactions_json = json.dumps(cleaned_transactions(transactions))           
           basket_json = json.dumps(cleaned_basket(baskets))
 
-          send_message(transactions_json)
-          send_message(basket_json)
+          send_message(transactions_json, queue_url)
+          send_message(basket_json, queue_url)
                     
      record_count = len(event['Records'])
      print(json.dumps({ 'recordCount': record_count }))
