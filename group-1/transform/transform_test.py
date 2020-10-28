@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from classes import Transaction, Basket
 
 
-from transform import cleaned_transactions, cleaned_basket
+from transform import cleaned_transactions, cleaned_basket, get_object_price_and_item
 
 class TestTransform(unittest.TestCase):
     def test_cleaned_transactions(self):
@@ -26,6 +26,13 @@ class TestTransform(unittest.TestCase):
                'Price': '6.00'
           }]
         self.assertEqual(cleaned_basket(test_list), expected_output)
+    def test_get_object_price_and_item(self):
+        expected_output = Basket('cappucino - large', '6.00')
+        test_basket = ['cappucino - large - 6.00']
+        self.assertEqual(get_object_price_and_item(test_basket).basket_item, expected_output.basket_item)
+
+
+
 
 
 

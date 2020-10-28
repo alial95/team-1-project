@@ -40,10 +40,9 @@ def cleaned_basket(baskets):
 
      
 def get_object_price_and_item(basket_items):
-     for item in basket_items:
-          price = item[0][-5:]
-          basket_item = item[0].strip(f'{price}').strip(' -')
-          basket = Basket(basket_item, price)
+     price = basket_items[0][-5:]
+     basket_item = basket_items[0].strip(f'{price}').strip(' -')
+     basket = Basket(basket_item, price)
      return basket
      
 

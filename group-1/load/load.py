@@ -115,6 +115,4 @@ def start(event, context):
         'baskets' : len(baskets), 
         'transactions':len(transactions)
     }))
-    print(json.dumps({
-        'transaction processed' : transactions[0]['location']
-    }))
+    
