@@ -34,8 +34,8 @@ functions:
           batchSize: 100
           maximumRetryAttempts: 2
           enabled: true
-          destinations:
-            onFailure: !GetAtt DsDLQQueue.Arn
+          # destinations:
+          #   onFailure: !GetAtt DsDLQQueue.Arn
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
@@ -102,6 +102,7 @@ functions:
     events:
       - sqs:
           arn: !GetAtt ExtractToTransform.Arn
+          arn: !GetAtt dsExtractToTransform.Arn
     iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
       - Effect: 'Allow'
         Action:
@@ -131,6 +132,14 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: group-1-ds-deadqueue
+    dsExtractToTransform:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: group-1-ds-extract-to-transform
+      RedrivePolicy: 
+        deadLetterTargetArn: !GetAtt DsDLQQueue.Arn
+        maxReceiveCount: 2
+
     
 
    
