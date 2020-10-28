@@ -140,6 +140,7 @@ resources:
         RedrivePolicy: 
           deadLetterTargetArn: !GetAtt DsDLQQueue.Arn
           maxReceiveCount: 2
+        VisibilityTimeout: 240
 
     
 
