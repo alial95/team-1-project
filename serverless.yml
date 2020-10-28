@@ -137,9 +137,9 @@ resources:
       Type: AWS::SQS::Queue
       Properties:
         QueueName: group-1-ds-extract-to-transform
-      RedrivePolicy: 
-        deadLetterTargetArn: !GetAtt DsDLQQueue.Arn
-        maxReceiveCount: 2
+        RedrivePolicy: 
+          deadLetterTargetArn: !GetAtt DsDLQQueue.Arn
+          maxReceiveCount: 2
 
     
 
