@@ -102,6 +102,7 @@ functions:
     events:
       - sqs:
           arn: !GetAtt ExtractToTransform.Arn
+      - sqs:
           arn: !GetAtt dsExtractToTransform.Arn
     iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
       - Effect: 'Allow'
