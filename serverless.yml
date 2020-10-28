@@ -35,7 +35,7 @@ functions:
           maximumRetryAttempts: 2
           enabled: true
           destinations:
-            onFailure: arn: !GetAtt DsDLQQueue.Arn
+            onFailure: !GetAtt DsDLQQueue.Arn
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
