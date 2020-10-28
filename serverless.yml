@@ -34,6 +34,8 @@ functions:
           batchSize: 100
           maximumRetryAttempts: 2
           enabled: true
+          destinations:
+            onFailure: arn: !GetAtt DsDLQQueue.Arn
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
@@ -72,10 +74,6 @@ functions:
     handler: load.start
     module: group-1/load
     events:
-      - s3:
-        bucket: cafe-transactions
-        event: s3:ObjectCreated:Put
-        existing: true
       - sqs:       
           arn: !GetAtt TransformToLoad.Arn
     iamRoleStatements: # IAM role statements so that services can be accessed in the AWS account
@@ -129,6 +127,10 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: group-1-deadqueue
+    DsDLQQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: group-1-ds-deadqueue
     
 
    
