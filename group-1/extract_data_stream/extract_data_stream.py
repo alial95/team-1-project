@@ -10,7 +10,7 @@ def start(event, context):
     for record in event['Records']:
         print(record)
         try:
-            decoded_data = base64.b64decode(record['kinesis']['data'])
+            decoded_data = base64.b64decode(record['kinesis']['data']).decode('utf-8')
         except Exception as error:
             print(json.dumps({'Error Message': error}))
         try:
@@ -24,8 +24,8 @@ def start(event, context):
             raw_transactions.append(transaction)
         except Exception as error:
             print(json.dumps({'Error Message': error}))
-        json_data = json.dumps(raw_transactions)
-        print(json_data)
+    json_data = json.dumps(raw_transactions)
+    print(json_data)
         # print(json.dumps({'Record processed': }))    
 
         
